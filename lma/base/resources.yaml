@@ -1202,5 +1202,33 @@ spec:
       tag: 2.4.1
     config:
       lokiAddress: http://loki.lma:3100/loki/api/v1/push
+      snippets:
+        pipelineStages:
+        - cri: {}
+        - match:
+            selector: '{app="eventrouter"}'
+            stages:
+            - json:
+                expressions:
+                  namespace: event.metadata.namespace
+            - labels:
+                namespace: ""
     serviceMonitor:
       enabled: false
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  labels:
+    name: eventrouter
+  name: eventrouter
+spec:
+  helmVersion: v3
+  chart:
+    type: helmrepo
+    repository: https://helm-charts.wikimedia.org/stable/
+    name: eventrouter
+    version: 0.4.0
+  releaseName: eventrouter
+  targetNamespace: lma
+  values: {}
