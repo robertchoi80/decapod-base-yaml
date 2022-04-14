@@ -1145,6 +1145,8 @@ spec:
     image:
       tag: 2.4.1
     replicas: 1
+    nodeSelector:
+      loki: enabled
     persistence:
       enabled: true
       size: 20Gi
