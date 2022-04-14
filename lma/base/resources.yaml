@@ -1158,7 +1158,7 @@ spec:
       hostPath:
         path: /etc/loki/rules/
         type: Directory
-    extraVolumeMounts: []
+    extraVolumeMounts:
     - mountPath: /etc/loki/rules/
       name: rules-volume
     config:
