@@ -1151,6 +1151,28 @@ spec:
       storageClassName: taco-storage
     serviceMonitor:
       enabled: false
+    extraVolumes:
+    - name: rules-volume
+      hostPath:
+        path: /etc/loki/rules/
+        type: Directory
+    extraVolumeMounts: []
+    - mountPath: /etc/loki/rules/
+      name: rules-volume
+    config:
+      ruler:
+        storage:
+          type: local
+          local:
+            directory: /etc/loki/rules
+        rule_path: /tmp/scratch
+        alertmanager_url: http://lma-alertmanager.lma:9093
+        ring:
+          kvstore:
+            store: inmemory
+        enable_api: true
+        enable_alertmanager_v2: true
+
 ---
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
