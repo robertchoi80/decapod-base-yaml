@@ -1158,16 +1158,20 @@ spec:
       hostPath:
         path: /etc/loki/rules/
         type: Directory
+    - name: rules-temp
+      emptyDir: {}
     extraVolumeMounts:
     - mountPath: /etc/loki/rules/
       name: rules-volume
+    - name: rules-temp
+      mountPath: /mnt/rules_temp
     config:
       ruler:
         storage:
           type: local
           local:
             directory: /etc/loki/rules
-        rule_path: /tmp/scratch
+        rule_path: /mnt/rules_temp
         alertmanager_url: http://lma-alertmanager.lma:9093
         ring:
           kvstore:
